@@ -3,7 +3,15 @@
             <div class="footer-inner bg-white">
                <div class="row">
                   <div class="col-sm-6">
-                     Copyright &copy; <?php echo date('M-Y'); ?> ADMIN
+                     <?php 
+                        if(isset($_SESSION['copyright'])){
+                           echo $_SESSION['copyright'];
+                        }else{
+                     ?>
+                        Copyright &copy; <?php echo date('M-Y'); ?> ADMIN
+                     <?php
+                        }
+                     ?>
                   </div>
                   <div class="col-sm-6 text-right">
                      Designed by <a href="https://colorlib.com/">CHETAN ROHIT</a>

@@ -3,7 +3,6 @@ require('top.inc.php');
 
 
 $categories_id = '';
-$color_id = '';
 $sub_categories_id = '';
 $name = '';
 $mrp = '';
@@ -11,7 +10,7 @@ $price = '';
 $qty = '';
 $image = '';
 $short_desc = '';
-$long_desc = ''; 
+$long_desc = '';
 $meta_title = '';
 $meta_desc = '';
 $meta_keyword = '';
@@ -48,18 +47,12 @@ if(isset($_GET['id']) && $_GET['id'] !=''){
 
    $id = get_safe_value($con,$_GET['id']);
   
-   //$sql = mysqli_query($con,"SELECT product.*,Product_Images.color_id FROM product,Product_Images WHERE products_images.product_id = '$id' and id = '$id' "); 
-
-   $sql = mysqli_query($con,"SELECT product.*,products_images.color_id FROM product,products_images WHERE product.id = products_images.product_id");
-
-   
-
+   $sql = mysqli_query($con,"SELECT * FROM product WHERE id = '$id' "); 
    $check = mysqli_num_rows($sql);
    if($check>0){
       $row = mysqli_fetch_assoc($sql);
 
       $categories_id = $row['categories_id'];
-      $color_id = $row['color_id'];
       $categories_id = $row['sub_categories_id'];
       $name = $row['name'];
       $mrp = $row['mrp'];
@@ -99,13 +92,11 @@ if(isset($_GET['id']) && $_GET['id'] !=''){
 */
 
 if(isset($_POST['submit'])){
+  /* pr($_FILES);
+   prx($_POST);*/
 
-  /*pr($_FILES);
-   prx($_POST);
-*/
 
    $categories_id = get_safe_value($con,$_POST['categories_id']);
-   $color_id = get_safe_value($con,$_POST['color_id']);
    $sub_categories_id = get_safe_value($con,$_POST['sub_categories_id']); //eneter ccategories by user 
    $name = get_safe_value($con,$_POST['name']);
    $mrp = get_safe_value($con,$_POST['mrp']);
@@ -188,7 +179,7 @@ if(isset($_FILES['Product_image'])){
          move_uploaded_file($_FILES['image']['tmp_name'], PRODUCT_IMAGE_SERVER_PATH.$image);
 
 
-         /*echo "INSERT INTO product(categories_id,sub_categories_id, name,mrp,price,qty,image,short_desc,long_desc,meta_title,meta_desc,meta_keyword,status,best_seller) VALUES('$categories_id', '$sub_categories_id', '$name','$mrp','$price','$qty','$image','$short_desc','$long_desc','$meta_title','$meta_desc','$meta_keyword','1','$best_seller')";*/
+         //echo "INSERT INTO product(categories_id,sub_categories_id, name,mrp,price,qty,image,short_desc,long_desc,meta_title,meta_desc,meta_keyword,status,best_seller) VALUES('$categories_id', '$sub_categories_id', '$name','$mrp','$price','$qty','$image','$short_desc','$long_desc','$meta_title','$meta_desc','$meta_keyword','1','$best_seller')";
 
          mysqli_query($con,"INSERT INTO product(categories_id,sub_categories_id, name,mrp,price,qty,image,short_desc,long_desc,meta_title,meta_desc,meta_keyword,status,best_seller) VALUES('$categories_id', '$sub_categories_id', '$name','$mrp','$price','$qty','$image','$short_desc','$long_desc','$meta_title','$meta_desc','$meta_keyword','1','$best_seller')"); 
 
@@ -217,7 +208,7 @@ if(isset($_FILES['Product_image'])){
                $Product_Image = rand(111,999).'_'.$_FILES['Product_image']['name'][$key];
                move_uploaded_file($_FILES['Product_image']['tmp_name'][$key], PRODUCT_MULTIIMAGE_SERVER_PATH.$Product_Image);
 
-               mysqli_query($con,"INSERT INTO products_images(Product_id,Product_Images,color_id) VALUES('$id','$Product_Image','$color_id')");
+               mysqli_query($con,"INSERT INTO products_images(Product_id,Product_Images) VALUES('$id','$Product_Image')");
             }
 
          }
@@ -233,7 +224,7 @@ if(isset($_FILES['Product_image'])){
             $Product_Image = rand(111,999).'_'.$_FILES['Product_image']['name'][$key];
             move_uploaded_file($_FILES['Product_image']['tmp_name'][$key], PRODUCT_MULTIIMAGE_SERVER_PATH.$Product_Image);
 
-            mysqli_query($con,"INSERT INTO products_images(Product_id,Product_Images,color_id) VALUES('$id','$Product_Image','$color_id')");
+            mysqli_query($con,"INSERT INTO products_images(Product_id,Product_Images) VALUES('$id','$Product_Image')");
             
          } 
       }      
@@ -242,7 +233,9 @@ if(isset($_FILES['Product_image'])){
 
       ?>
       <script>
-         window.location.href = 'product.php';
+
+         alert('Product inserted');
+         //window.location.href = 'product.php';
       </script>         
        <?php
        die();
@@ -340,30 +333,6 @@ if(isset($_FILES['Product_image'])){
                                  </div>
 
                               </div>
-
-                           </div>
-
-                           <div class="form-group">
-                              <div class="row">
-                                 <div class="col-lg-6">
-                                    <label for="categories" class=" form-control-label"> Color </label>
-                                       <select class=" form-control" name="color_id" id="categories_id" onclick="get_sub_cat('')">
-                                       <option> Select COLOR</option>
-                                          <?php
-
-                                             $res = mysqli_query($con,"SELECT id,color from color order by color desc");
-                                             while($row=mysqli_fetch_assoc($res)){
-                                                if($row['id']== $color_id){
-                                                   echo "<option selected value=".$row['id'].">".$row['color']."</option>";
-                                                }else{
-                                                   echo "<option value=".$row['id'].">".$row['color']."</option>";
-                                                }
-                                             }
-                                          ?>
-                                    </select>
-                                 </div>
-                              </div>
-                              
                            </div>
 
                            <div class="form-group">
@@ -460,8 +429,6 @@ if(isset($_FILES['Product_image'])){
 
       total++;
       var html ='<div class="col-lg-4" id="add_image_box'+total+'"> <label for="categories" class=" form-control-label"> IMAGE </label><input type="file" name="Product_image[]" placeholder="Enter Product Image" class="form-control"> <button  type="button" class="btn btn-lg btn-info btn-block" onclick="Remove_Image('+total+')"> <span id="payment-button-amount">Remove Image</span></button></div>';
-
-      var html = '<div class="variation"><label for="attribute"> Color </label><input type="text" name="color" placeholder="Enter Color" class="form-control"><label for="attribute"> Size </label><input type="text" name="size" placeholder="Enter Color" class="form-control"></div>';
 
       jQuery('#image_box').append(html);
    }

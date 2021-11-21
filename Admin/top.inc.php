@@ -63,8 +63,12 @@ if(isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN'] ='yes'){
                   <li class="menu-item-has-children dropdown">
                      <a href="Coupon.php" > Coupon Master</a>
                   </li>
-                <li class="menu-item-has-children dropdown">
+                  <li class="menu-item-has-children dropdown">
                      <a href="Contact_us.php" > CONTACT DATA </a>
+                  </li>
+                  
+                  <li class="menu-item-has-children dropdown">
+                     <a href="CopyRight.php"> CopyRight </a>
                   </li>
                </ul>
             </div>

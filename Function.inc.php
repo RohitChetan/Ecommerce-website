@@ -304,15 +304,7 @@ $html = '<!DOCTYPE html>
 	$mail->Subject = "Invoice Details";
 	$mail->Body = $html;
 	//$mail->AltBody = "This is the plain text version of the email content";
-	if($mail->send())
-	{ 
-
-        //echo "Mail send";		
-
-	}else{
-
-		// error code here echo "done";
-	}
+	
 
 
 

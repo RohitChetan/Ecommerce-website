@@ -174,9 +174,15 @@ $meta_keyword = $product_meta_res['meta_keyword'];
                                               <div class="nav-item dropdown">
                                                     <a href="#"  data-toggle="dropdown"><strong> Account </strong></a>
                                                     <div class="dropdown-menu">
-                                                        <a href="my_order.php" class="dropdown-item"> My Order</a><br/>
-                                                        <a href="Profile.php" class="dropdown-item"> Profile </a><br/>
-                                                        <a href="LogOut.php" class="dropdown-item"> Log Out </a>
+                                                        <li>
+                                                            <a href="my_order.php" class="dropdown-item"> My Order</a><br/>
+                                                        </li>
+                                                        <li>
+                                                            <a href="Profile.php" class="dropdown-item"> Profile </a><br/>
+                                                        </li>
+                                                        <li>
+                                                            <a href="LogOut.php" class="dropdown-item"> Log Out </a>
+                                                        </li>
                                                     </div>
                                                 </div>
                                             </div>
